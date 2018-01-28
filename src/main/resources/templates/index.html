@@ -16,7 +16,7 @@
     <script sec:authorize="hasAuthority('Developer')" th:src="@{/js/developer-main-page.js}" src="../static/js/developer-main-page.js" async></script>
 </head>
 <body>
-<a sec:authorize="isAuthenticated()" href="/">Main page</a>
+<a sec:authorize="isAuthenticated()" href="/logout">Logout</a>
     <div class="my-flexbox container" sec:authorize="isAnonymous()">
 
         <div th:if="${param.error}" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
