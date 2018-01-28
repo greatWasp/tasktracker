@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4>">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${projectName}"></title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}" href="../static/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+    <script th:src="@{/js/jquery.min.js}" src="../static/js/jquery.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/closeable-panel.js}" src="../static/js/closeable-panel.js" async></script>
+    <script th:src="@{/js/collapsible-panel.js}" src="../static/js/collapsible-panel.js" async></script>
+    <script sec:authorize="hasAuthority('Manager')" th:src="@{/js/project-manager.js}" src="../static/js/project-manager.js" async></script>
+    <script sec:authorize="hasAuthority('Developer')" th:src="@{/js/project-developer.js}" src="../static/js/project-developer.js" async></script>
+</head>
+<body>
+<a href="/">Main page</a>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 th:text="${projectName}">Project name</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-collapsed clickable collapsible">
+                        <h3 class="panel-title">Developers</h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        <div id="developers"></div>
+                        <a href="/developers"><button sec:authorize="hasAuthority('Manager')" class="btn btn-primary">Add developer</button></a>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading ">
+                        <h3 class="panel-title">Description</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="description"></div>
+                    </div>
+                </div>
+                <div>
+                    <div sec:authorize="hasAuthority('Developer')">
+                        <label>Show tasks:</label>
+                        <select id="show-tasks">
+                            <option>All</option>
+                            <option>My</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary pull-right"
+                            data-toggle="modal" data-target="#myModal">Create task</button>
+                    <h4>Tasks</h4>
+                </div>
+                <table id="tasks" class="table">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form class="form-horizontal" action="/login" method="POST">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <div class="form-group">
+                                    <label class="control-label" for="name">Name:</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Task name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="task-description">Description:</label>
+                                    <textarea id="task-description" name="textarea" class="form-control" placeholder="Description"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="create-task" type="submit" class="btn btn-default pull-left">Create</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

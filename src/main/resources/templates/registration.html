@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4>">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}" href="../static/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+    <script th:src="@{/js/jquery.min.js}" src="../static/js/jquery.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
+</head>
+<body>
+<a href="/">Main page</a>
+    <div class="my-flexbox container">
+
+        <div class="panel panel-default col-xs-12 col-sm-6 col-md-5 col-lg-4">
+            <div class="panel-body">
+                <form class="form-horizontal" action="/register" th:action="@{/register}"
+                      th:object="${userDto}" method="POST">
+                    <div class="form-group"
+                         th:classappend="(${#fields.hasAnyErrors()} ? (${#fields.hasErrors('username')} ? has-error : has-success))">
+                        <label class="control-label" for="email">Username:</label>
+                        <input type="text" class="form-control" id="username" placeholder="Username"
+                               th:field="*{username}"/>
+                        <div class="text-error" th:each="error: ${#fields.errors('username')}"
+                             th:text="${error}">Validation error</div>
+                    </div>
+                    <div class="form-group"
+                         th:classappend="(${#fields.hasAnyErrors()} ? (${#fields.hasErrors('email')} ? has-error : has-success))">
+                        <label class="control-label" for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email"
+                                   th:field="*{email}"/>
+                            <div class="text-error" th:each="error: ${#fields.errors('email')}"
+                                 th:text="${error}">Validation error</div>
+                    </div>
+                    <div class="form-group"
+                         th:classappend="(${#fields.hasAnyErrors()} ? (${#fields.hasErrors('password')} or ${#fields.hasGlobalErrors()} ? has-error : has-success))">
+                        <label class="control-label" for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password"
+                                   th:field="*{password}"/>
+                            <div class="text-error" th:each="error: ${#fields.errors('password')}"
+                                 th:text="${error}">Validation error</div>
+                    </div>
+                    <div class="form-group"
+                         th:classappend="(${#fields.hasAnyErrors()} ? (${#fields.hasErrors('matchingPassword')} or ${#fields.hasGlobalErrors()} ? has-error : has-success))">
+                        <label class="control-label" for="matchingPassword">Confirm password:</label>
+                            <input type="password" class="form-control" id="matchingPassword" placeholder="Confirm password"
+                                   th:field="*{matchingPassword}">
+                            <div class="text-error" th:each="error: ${#fields.errors('matchingPassword')}"
+                                 th:text="${error}">Validation error</div>
+                            <div class="text-error" th:each="error: ${#fields.errors('global')}"
+                                 th:text="${error}">Validation error</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="email">Role:</label>
+                        <select class="form-control" th:field="*{role}">
+                            <option value="Developer">Developer</option>
+                            <option value="Manager">Manager</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="display-flex justify-content-center">
+                            <button type="submit" class="btn btn-default">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

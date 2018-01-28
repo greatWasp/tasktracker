@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4>">
+<head>
+    <meta charset="UTF-8">
+    <title>Developers</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}" href="../static/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+    <script th:src="@{/js/jquery.min.js}" src="../static/js/jquery.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/closeable-panel.js}" src="../static/js/closeable-panel.js" async></script>
+    <script sec:authorize="hasAuthority('Manager')" th:src="@{/js/manager-main-page.js}" src="../static/js/manager-main-page.js" async></script>
+    <script sec:authorize="hasAuthority('Manager')" th:src="@{/js/developers.js}" src="../static/js/developers.js" async></script>
+</head>
+<body>
+<a href="/">Main page</a>
+    <div class="container" sec:authorize="hasAuthority('Manager')">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Developers</h3>
+            </div>
+            <div class="panel-body position-relative">
+                <div class="container display-flex">
+                    <div>
+                        Add to
+                        <select id="add-to">
+                            <option>Project</option>
+                            <option>Task</option>
+                        </select>
+                    </div>
+                    <div id="select-project-wrapper" class="margin-left-20">
+                        Select project
+                        <select id="project">
+                        </select>
+                    </div>
+                    <div id="select-task-wrapper" class="margin-left-20" style="display: none;">
+                        Select task
+                        <select id="task">
+                        </select>
+                    </div>
+                    <div class="margin-left-20">
+                        <button id="add-developer" class="btn btn-primary" disabled="disabled">Add</button>
+                    </div>
+                    <div class="search-wrapper">
+                        <input id="search">
+                        <button id="search-button">Search</button>
+                    </div>
+                </div>
+                <table id="developers" class="table">
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4>">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${projectName} + '/' + ${taskName}"></title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}" href="../static/css/font-awesome.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+    <script th:src="@{/js/jquery.min.js}" src="../static/js/jquery.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}" src="../static/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/closeable-panel.js}" src="../static/js/closeable-panel.js" async></script>
+    <script th:src="@{/js/collapsible-panel.js}" src="../static/js/collapsible-panel.js" async></script>
+    <script sec:authorize="hasAuthority('Manager')" th:src="@{/js/task-manager.js}" src="../static/js/task-manager.js" async></script>
+    <script sec:authorize="hasAuthority('Developer')" th:src="@{/js/task-developer.js}" src="../static/js/task-developer.js" async></script>
+</head>
+<body>
+<a href="/">Main page</a>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>
+                    <text class="pull-right">Status:
+                        <select id="status" value="Waiting">
+                            <option>Waiting</option>
+                            <option>Implementation</option>
+                            <option>Verifying</option>
+                            <option>Releasing</option>
+                        </select>
+                        <button id="save-status" disabled="disabled" class="btn-disabled pull-right">Save</button>
+                        <div class="pull-right" style="width: 15px;">   </div>
+                    </text>
+                    <a th:href="'/projects/' + ${projectName}" th:text="${projectName}">Project name</a><text th:text="'/' + ${taskName}">/Task name</text>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-collapsed clickable collapsible">
+                        <h3 class="panel-title">Developers</h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    </div>
+                    <div class="panel-body" style="display: none;">
+                        <div id="developers"></div>
+                        <a href="/developers"><button sec:authorize="hasAuthority('Manager')" class="btn btn-primary">Add developer</button></a>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Description</h3>
+                    </div>
+                    <div id="description" class="panel-body">
+
+                    </div>
+                </div>
+                <div class="page-header">
+                    <h3><small id="comments-count" class="pull-right">comments count</small> Comments </h3>
+                </div>
+                <div id="comments" class="comments-list">
+                    <!--<div class="media">-->
+                        <!--<p class="pull-right"><small>posted at</small></p>-->
+                        <!--<div class="media-body">-->
+                            <!--<h4 class="media-heading username">Comment author</h4>-->
+                            <!--<div>Wow! this is really great.</div>-->
+                            <!--<p><small><a href="#">Edit</a>   <a href="#">Delete</a></small></p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <div>
+                    <span>Post comment:</span>
+                    <div class="form-group">
+                        <textarea id="comment-text" class="form-control"></textarea>
+                    </div>
+                    <button id="post-comment" class="btn btn-default">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
