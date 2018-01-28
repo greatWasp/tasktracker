@@ -20,6 +20,7 @@
             <div class="panel-body">
                 <form class="form-horizontal" action="/register" th:action="@{/register}"
                       th:object="${userDto}" method="POST">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group"
                          th:classappend="(${#fields.hasAnyErrors()} ? (${#fields.hasErrors('username')} ? has-error : has-success))">
                         <label class="control-label" for="email">Username:</label>
